@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ex. 03 - Inferência Sobre Aluno</title>
+</head>
+
+<body>
+    <h1>Lista 01 - Revisão HTML e JS</h1>
+    <br>
+    <br>
+    Insira a nota do cidadão: <input type="text" id="input_nota" placeholder='Ex: 10 '>
+    <br>
+    <button onclick="ClassificaAluno()">Classificar Aluno</button>
+    <br>
+    <br>
+    <div id="div_resposta"></div>
+</body>
+
+</html>
+<script>
+    function ClassificaAluno() {
+
+        var nota = Number(document.getElementById('input_nota').value);
+
+        var resposta;
+
+        if (nota < 5) {
+            resposta = "Aluno precisa de muita ajuda";
+        } else if (nota <= 7) {
+            resposta = "Aluno na média";
+        } else if (nota <= 9.5) {
+            resposta = "Aluno acima da média";
+        } else {
+            resposta = "Aluno fora da curva";
+        }
+
+        document.getElementById('div_resposta').innerHTML = resposta;
+
+    }
+</script>

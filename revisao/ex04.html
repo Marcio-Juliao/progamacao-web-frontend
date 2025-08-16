@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ex. 04 - Tabuada</title>
+</head>
+<body>
+    <body>
+        <h1>Lista 01 - Revisão HTML e JS</h1>
+        <br>
+        <br>
+        Selecione um número para ver a tabuada: 
+        <br>
+        <br>
+        <input type="number" id="input_n1" placeholder='Ex: 10'>
+        <br>
+        <br>
+        Selecione até que numero irá:
+        <br>
+        <input type="number" id="input_n2" placeholder='Ex: 10'>
+        <br>
+        <button onclick="VerTabuada()">Ver Tabuada</button>
+        <br>
+        <br>
+        <div id="div_resposta"></div>
+    </body>
+</body>
+</html>
+<script>
+    function VerTabuada() {
+        
+        var n1 = Number(document.getElementById('input_n1').value);
+        var n2 = Number(document.getElementById('input_n2').value);
+
+        var div_resposta = document.getElementById('div_resposta');
+
+        div_resposta.innerHTML = "";
+
+        for(let i = 1; i <= n2; i++) {
+            div_resposta.innerHTML += `<br> ${n1} x ${i} = ${n1 * i}`;
+        }
+
+    }
+</script>

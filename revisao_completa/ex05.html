@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ex. 05 - Filmes Preferidos</title>
+</head>
+
+<body>
+    <h1>Lista 01 - Revisão HTML e JS</h1>
+    <br>
+    <br>
+    Informe um filme:
+    <br>
+    <br>
+    <input type="text" id="input_filme" placeholder='Ex: Star Wars'>
+    <br>
+    <br>
+    <button onclick="CadastraFilme()">Cadastrar</button>
+    <br>
+    <br>
+    <div id="div_resposta"></div>
+</body>
+
+</html>
+<script>
+    function CadastraFilme() {
+
+        // obrigatório o uso de listas
+
+        var filme = document.getElementById('input_filme').value;
+
+        var listaFilmes = [];
+
+        var cont = 0;
+
+        var div_resposta = document.getElementById('div_resposta');
+
+        listaFilmes.push(filme);
+
+        div_resposta.innerHTML += `<br> ${listaFilmes[cont]}`;
+
+        cont++;
+
+    }
+</script>

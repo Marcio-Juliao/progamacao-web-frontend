@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Ex. 09 - Enquete de Preferências</title>
+</head>
+<body>
+    <h1>Lista 01 - Revisão HTML e JS</h1>
+    <br>
+    <br>
+    Escolha sua preferência:
+    <br>
+    <br>
+    <select id="select_opcao">
+        <option value="#" selected disabled>Selecione Uma Opção</option>
+        <option value="1">Café</option>
+        <option value="2">Chá</option>
+        <option value="3">Suco</option>
+    </select>
+    <br>
+    <br>
+    <button onclick="votar()">Votar</button>
+    &nbsp;&nbsp;
+    <button onclick="verResultado()">Ver Resultado</button>
+    <br>
+    <br>
+    <hr>
+    <br>
+    <div id="div_resposta"></div>
+</body>
+</html>
+    <script>
+
+        const opcoes = new Map();
+        opcoes.set("1", "Café");
+        opcoes.set("2", "Chá");
+        opcoes.set("3", "Suco");
+
+        var votos = [];
+        var div_resposta = document.getElementById('div_resposta');
+
+        function votar() {
+            var select = document.getElementById('select_opcao');
+            var opcaoSelecionada = select.value;
+
+            votos.push(opcaoSelecionada);
+
+            // Limpa o select
+            select.value = "#";
+        }
+
+        function verResultado() {
+            div_resposta.innerHTML = "";
+            let saida = "";
+
+            let contagem = {
+                "1": 0,
+                "2": 0,
+                "3": 0
+            };
+
+            votos.forEach(voto => {
+                contagem[voto]++;
+            });
+
+            saida += "Resultado da Enquete:<br><br>";
+
+            for (let [chave, nome] of opcoes.entries()) {
+                saida += `${nome}: ${contagem[chave]} voto(s)<br>`;
+            }
+
+            let maisVotado = "";
+            let maiorQtd = -1;
+
+            for (let [chave, nome] of opcoes.entries()) {
+                if (contagem[chave] > maiorQtd) {
+                    maiorQtd = contagem[chave];
+                    maisVotado = nome;
+                }
+            }
+
+            if (maiorQtd > 0) {
+                saida += `<br><strong>${maisVotado} está ganhando com ${maiorQtd} voto(s)!</strong>`;
+            } else {
+                saida += "<br><strong>Nenhum voto registrado ainda.</strong>";
+            }
+
+            div_resposta.innerHTML = saida;
+        }
+    </script>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ex. 02 - Média e Inferência</title>
+</head>
+
+<body>
+    <h1>Lista 01 - Revisão HTML e JS</h1>
+    <br>
+    <br>
+    Insira a nota 1: <input type="text" id="input_n1" placeholder='Ex: 10 '>
+    <br>
+    <br>
+    Insira a nota 2: <input type="number" id="input_n2" placeholder='Ex: 8 '>
+    <br>
+    <button onclick="CalculaMedia()">Verificar situação</button>
+    <br>
+    <br>
+    <div id="div_resposta"></div>
+</body>
+
+</html>
+<script>
+    function CalculaMedia() {
+
+        var n1 = Number(document.getElementById('input_n1').value);
+        var n2 = Number(document.getElementById('input_n2').value);
+
+
+        var media = (n1 + n2) / 2;
+
+        var div_resposta = document.getElementById('div_resposta');
+
+        if (media >= 6) {
+            div_resposta.innerHTML = `Parabéns, aprovado!`;
+        }
+
+        if (media < 6) {
+            div_resposta.innerHTML = `Tente outra vez...`;
+        }
+
+    }
+</script>

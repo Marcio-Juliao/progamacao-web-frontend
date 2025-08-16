@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ex. 08 - Gerenciamento de Alunos</title>
+</head>
+<body>
+        <h1>Lista 01 - Revisão HTML e JS</h1>
+        <br>
+        <br>
+        Informe um aluno: 
+        <br>
+        <br>
+        <input type="text" id="input_aluno" placeholder='Ex: João'>
+        <br>
+        <br>
+        Informe uma idade:
+        <br>
+        <br>
+        <input type="number" id="input_idade" placeholder='Ex: 22'>
+        <br>
+        <br>
+        De: 
+        <br>
+        <br>
+        <input type="text" id="input_de" placeholder='Ex: 17'>
+        <br>
+        <br>
+        Até: 
+        <br>
+        <br>
+        <input type="text" id="input_ate" placeholder='Ex: 23'>
+        <br>
+        <br>
+        <button onclick="CadastraAluno()">Cadastrar</button>
+        &nbsp;&nbsp;
+        <button onclick="ExibeAluno()">Exibir Todas</button>
+        &nbsp;&nbsp;
+        <button onclick="FiltraPorIdade()">Filtrar por idade</button>
+        <br>
+        <hr>
+        <br>
+        <div id="div_resposta"></div>
+</body>
+</html>
+<script>
+
+    var listaAlunos = [];
+    var div_resposta = document.getElementById('div_resposta');
+
+    function CadastraAluno() {
+
+        let input_titulo = document.getElementById('input_aluno');
+        let input_idade = document.getElementById('input_idade');
+
+        let aluno_titulo = input_titulo.value;
+        let aluno_idade = Number(input_idade.value);
+
+        let aluno = {
+            nome: aluno_titulo,
+            idade: aluno_idade
+        }
+
+        listaAlunos.push(aluno);
+
+        input_titulo.value = "";
+        input_idade.value = "";
+        
+    }
+
+    function ExibeAluno() {
+
+        div_resposta.innerHTML = "";
+        // se nao inicializar a variável, estava saindo com uma "sujeira"
+        let saida = "";
+        
+        listaAlunos.forEach(aluno => {
+            saida += `<br> | Aluno: ${aluno.nome} | Idade: ${aluno.idade} |`;
+        });
+
+        div_resposta.innerHTML = saida;
+
+    }
+
+    function FiltraPorIdade() {
+
+    div_resposta.innerHTML = "";
+    let saida = "";
+
+    
+    var de = Number(document.getElementById('input_de').value);
+    var ate = Number(document.getElementById('input_ate').value);
+
+    const alunosFiltradas = listaAlunos.filter(aluno => 
+        aluno.idade >= de && aluno.idade <= ate
+    );
+
+    alunosFiltradas.forEach(aluno => {
+        saida += `<br> | Aluno: ${aluno.nome} | Idade: ${aluno.idade} |`;
+    });
+
+    div_resposta.innerHTML = saida;
+
+    }
+
+</script>

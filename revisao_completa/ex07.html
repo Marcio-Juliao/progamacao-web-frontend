@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ex. 07 - Gerenciamento de Tarefas</title>
+</head>
+
+<body>
+    <h1>Lista 01 - Revisão HTML e JS</h1>
+    <br>
+    <br>
+    Informe uma tarefa:
+    <br>
+    <br>
+    <input type="text" id="input_tarefa" placeholder='Ex: Dar banho no peixe'>
+    <br>
+    <br>
+    Selecione um status:
+    <br>
+    <br>
+    <select name="select_status" id="select_status">
+        <option value="#" selected disabled>Selecione um Status</option>
+        <option value="1">Pendente</option>
+        <option value="2">Concluída</option>
+    </select>
+    <br>
+    <br>
+    <button onclick="CadastraTarefa()">Cadastrar</button>
+    &nbsp;&nbsp;
+    <button onclick="ExibeTarefa()">Exibir Todas</button>
+    &nbsp;&nbsp;
+    <button onclick="VerSomente('1')">Ver somente pendentes</button>
+    &nbsp;&nbsp;
+    <button onclick="VerSomente('2')">Ver somente concluídas</button>
+    <br>
+    <hr>
+    <br>
+    <div id="div_resposta"></div>
+</body>
+
+</html>
+<script>
+
+    const status = new Map();
+    status.set('1', 'Pendente');
+    status.set('2', 'Concluído');
+
+    var listaTarefas = [];
+    var div_resposta = document.getElementById('div_resposta');
+
+    function CadastraTarefa() {
+
+        let input_titulo = document.getElementById('input_tarefa');
+        let input_status = document.getElementById('select_status');
+
+        let tarefa_titulo = input_titulo.value;
+        let tarefa_status = input_status.value;
+
+        tarefa_status = status.get(tarefa_status);
+
+        let tarefa = {
+            nome: tarefa_titulo,
+            status: tarefa_status
+        }
+
+        listaTarefas.push(tarefa);
+
+        input_titulo.value = "";
+        input_status.value = "";
+
+    }
+
+    function ExibeTarefa() {
+
+        div_resposta.innerHTML = "";
+        // se nao inicializar a variável, estava saindo com uma "sujeira"
+        let saida = "";
+
+        listaTarefas.forEach(tarefa => {
+            saida += `<br> | Tarefa: ${tarefa.nome} | Status: ${tarefa.status} |`;
+        });
+
+        div_resposta.innerHTML = saida;
+
+    }
+
+    function VerSomente(statusSelecionado) {
+
+        div_resposta.innerHTML = "";
+        let saida = "";
+
+        let statusFiltro = status.get(statusSelecionado);
+
+        const tarefasFiltradas = listaTarefas.filter(tarefa =>
+            tarefa.status === statusFiltro
+        );
+
+        tarefasFiltradas.forEach(tarefa => {
+            saida += `<br> | Tarefa: ${tarefa.nome} | Status: ${tarefa.status} |`;
+        });
+
+        div_resposta.innerHTML = saida;
+
+    }
+
+</script>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ex. 06 - Músicas Preferidas</title>
+</head>
+
+<body>
+    <h1>Lista 01 - Revisão HTML e JS</h1>
+    <br>
+    <br>
+    Informe uma musica:
+    <br>
+    <br>
+    <input type="text" id="input_musica" placeholder='Ex: Headlock'>
+    <br>
+    <br>
+    De:
+    <br>
+    <br>
+    <input type="text" id="input_de" placeholder='Ex: 2'>
+    <br>
+    <br>
+    Até:
+    <br>
+    <br>
+    <input type="text" id="input_ate" placeholder='Ex: 5'>
+    <br>
+    <br>
+    <button onclick="CadastraMusica()">Cadastrar</button>
+    &nbsp;&nbsp;
+    <button onclick="ExibeMusica()">Exibir</button>
+    &nbsp;&nbsp;
+    <button onclick="FiltraMusica()">Filtrar</button>
+    <br>
+    <hr>
+    <br>
+    <div id="div_resposta"></div>
+</body>
+
+</html>
+<script>
+
+    var listaMusicas = [];
+    var cont = 0;
+    var div_resposta = document.getElementById('div_resposta');
+
+    function CadastraMusica() {
+
+        var musica = document.getElementById('input_musica').value;
+
+        listaMusicas.push(musica);
+
+    }
+
+    function ExibeMusica() {
+
+        div_resposta.innerHTML += `<br> ${listaMusicas[cont]}`;
+
+        cont++;
+    }
+
+    function FiltraMusica() {
+
+        div_resposta.innerHTML = "";
+
+        var de = Number(document.getElementById('input_de').value);
+        var ate = Number(document.getElementById('input_ate').value);
+
+        for (let i = de - 1; i <= ate - 1; i++) {
+            let item = listaMusicas[i];
+            div_resposta.innerHTML += `<br> ${i + 1} - ${item} `
+        }
+
+    }
+
+</script>

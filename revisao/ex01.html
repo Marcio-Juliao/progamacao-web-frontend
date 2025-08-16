@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ex. 01 - Pizza</title>
+</head>
+<body>
+    <body>
+        <h1>Lista 01 - Revisão HTML e JS</h1>
+        <br>
+        <br>
+        Insira o sabor da pizza: <input type="text" id="input_sabor" placeholder='Ex: "Pepperoni" '>
+        <br>
+        <br>
+        Insira o valor da pizza: <input type="number" id="input_preco" placeholder='Ex: "R$ 80.50" '>
+        <br>
+        <br>
+        Insira quantos amigos vão dividir a pizza: <input type="number" id="input_amigos" placeholder='Ex: "8" '>
+        <button onclick="DividePizza()"> Ver valor por amigo </button>
+        <br>
+        <br>
+        <div id="div_resposta"></div>
+    </body>
+</body>
+</html>
+<script>
+    function DividePizza() {
+        var sabor = document.getElementById('input_sabor').value;
+        var preco = Number(document.getElementById('input_preco').value);
+        var amigos = Number(document.getElementById('input_amigos').value);
+        
+        var divisao = (preco * 1.1) / amigos;
+
+        // alert(`Cada amigo vai colaborar com R$${divisao} para a pizza de ${sabor}`);
+
+        document.getElementById('div_resposta').innerHTML = `Cada amigo vai colaborar com R$${divisao} para a pizza de ${sabor}`
+
+
+
+    }
+</script>
