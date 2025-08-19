@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de Compras</title>
+</head>
+<body>
+  <h1>Lista de Compras</h1>
+
+  <label for="nomeItem">Nome do item:</label>
+  <input id="nomeItem" type="text" placeholder="Ex.: Arroz">
+
+  <label for="qtdItem">Quantidade:</label>
+  <input id="qtdItem" type="number" min="1" placeholder="Ex.: 2">
+
+  <button id="btnAdicionar" onclick="adicionar()">Adicionar à lista</button>
+  <p id="mensagem"></p>
+
+  <button id="btnExibir" onclick="exibir()">Exibir lista</button>
+  <div id="saida"></div>
+</body>
+</html>
+<script>
+
+    const lista = [];
+    const input_item = document.getElementById('nomeItem');
+    const input_qtd_item = document.getElementById('qtdItem');
+    const div_mensagem = document.getElementById('mensagem');
+    const div_saida = document.getElementById('saida');
+
+
+    const adicionar = () => {
+        
+        const item = {
+            nome: input_item.value,
+            qtd: input_qtd_item.value
+        };
+
+        lista.push(item);
+
+        div_mensagem.innerHTML = `${item.qtd}x de ${item.nome} adicionado com sucesso!`;
+
+    }
+
+    const exibir = () => {
+
+        let saida = "";
+
+        lista.forEach(item => {
+            saida += `<br> | Item: ${item.nome} | Quantidade: ${item.qtd} |`;
+        });
+
+        div_saida.innerHTML = saida;
+    }
+
+</script>

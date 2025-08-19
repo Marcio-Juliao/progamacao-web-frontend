@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Ranking de Jogos</title>
+</head>
+<body>
+  <h1>Ranking de Jogos</h1>
+
+  <label for="nomeJogo">Nome do jogo:</label>
+  <input id="nomeJogo" type="text" placeholder="Ex.: League of Legends">
+
+  <label for="pontuacaoJogo">Pontuação:</label>
+  <input id="pontuacaoJogo" type="number" min="0" placeholder="Ex.: 5000">
+
+  <button onclick="adicionarJogo()">Adicionar</button>
+  <p id="mensagem"></p>
+
+  <button onclick="mostrarRanking()">Mostrar ranking</button>
+  <div id="saida"></div>
+
+  <script>
+
+    const ranking = [];
+
+    const adicionarJogo = () => {
+      const nome = document.getElementById('nomeJogo').value.trim();
+      const pontuacao = Number(document.getElementById('pontuacaoJogo').value);
+      const mensagem = document.getElementById('mensagem');
+
+      ranking.push({ nome, pontuacao });
+      mensagem.textContent = `Jogo "${nome}" com ${pontuacao} pontos adicionado!`;
+
+    }
+
+    const mostrarRanking = () => {
+      const saida = document.getElementById('saida');
+
+      const rankingOrdenado = [...ranking].sort((a, b) => b.pontuacao - a.pontuacao);
+      const linhas = rankingOrdenado.map((jogo, index) => `<li>${index + 1}. ${jogo.nome} — ${jogo.pontuacao} pts</li>`);
+      const topJogo = rankingOrdenado.at(0);
+
+      saida.innerHTML = `
+        <ul>${linhas.join('')}</ul>
+        <p><strong>Jogo com maior pontuação:</strong> ${topJogo.nome} — ${topJogo.pontuacao} pts</p>
+      `;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Cadastro de Livros</title>
+</head>
+<body>
+  <h1>Cadastro de Livros</h1>
+
+  <label for="tituloLivro">Título do livro:</label>
+  <input id="tituloLivro" type="text" placeholder="Ex.: Dom Casmurro">
+
+  <label for="autorLivro">Autor:</label>
+  <input id="autorLivro" type="text" placeholder="Ex.: Machado de Assis">
+
+  <button id="btnCadastrar" onclick="adicionar()">Cadastrar</button>
+
+  <button id="btnExibir" onclick="exibir()">Exibir livros</button>
+  <div id="saida"></div>
+</body>
+</html>
+<script>
+    const lista = [];
+    const input_livro = document.getElementById('tituloLivro');
+    const input_autor = document.getElementById('autorLivro');
+    const div_saida = document.getElementById('saida');
+
+    const adicionar = () => {
+        
+        const livro = {
+            nome: input_livro.value,
+            autor: input_autor.value
+        };
+
+        lista.push(livro);
+
+    }
+
+    const exibir = () => {
+
+        let saida = "";
+
+        lista.forEach(livro => {
+            saida += `<br> | livro: ${livro.nome} | Autor: ${livro.autor} |`;
+        });
+
+        div_saida.innerHTML = saida;
+    }
+</script>
