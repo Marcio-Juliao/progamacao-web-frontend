@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Controle de Estoque</title>
+</head>
+<body>
+  <h1>Controle de Estoque</h1>
+
+  <label for="nomeProduto">Produto:</label>
+  <input id="nomeProduto" type="text" placeholder="Ex.: Arroz">
+
+  <label for="quantidadeProduto">Quantidade em estoque:</label>
+  <input id="quantidadeProduto" type="number" min="0" placeholder="Ex.: 50">
+
+  <button onclick="adicionarProduto()">Adicionar produto</button>
+  <p id="mensagem"></p>
+
+  <hr>
+
+  <label for="quantidadeFiltro">Filtrar produtos com quantidade menor que:</label>
+  <input id="quantidadeFiltro" type="number" min="0" placeholder="Ex.: 20">
+
+  <button onclick="filtrarProdutos()">Filtrar</button>
+  <div id="saida"></div>
+
+  <script>
+    const estoque = [];
+
+    const adicionarProduto = () => {
+      const nome = document.getElementById('nomeProduto').value.trim();
+      const quantidade = Number(document.getElementById('quantidadeProduto').value);
+      const mensagem = document.getElementById('mensagem');
+
+      if (!nome || quantidade < 0) {
+        mensagem.textContent = "Informe um produto válido e uma quantidade positiva.";
+        return;
+      }
+
+      estoque.push({ nome, quantidade });
+      mensagem.textContent = `Produto "${nome}" com ${quantidade} unidades adicionado ao estoque!`;
+      
+      document.getElementById('nomeProduto').value = '';
+      document.getElementById('quantidadeProduto').value = '';
+    }
+
+    const filtrarProdutos = () => {
+      const filtro = Number(document.getElementById('quantidadeFiltro').value);
+      const saida = document.getElementById('saida');
+
+      if (isNaN(filtro) || filtro < 0) {
+        saida.textContent = "Informe um valor válido para filtragem.";
+        return;
+      }
+
+      const produtosFiltrados = estoque.filter(produto => produto.quantidade < filtro);
+
+      if (produtosFiltrados.length === 0) {
+        saida.textContent = "Nenhum produto encontrado com quantidade menor que " + filtro;
+        return;
+      }
+
+      let lista = '<ul>';
+      produtosFiltrados.forEach(produto => {
+        lista += `<li>${produto.nome} — ${produto.quantidade} unidades</li>`;
+      });
+      lista += '</ul>';
+
+      saida.innerHTML = lista;
+    }
+  </script>
+</body>
+</html>

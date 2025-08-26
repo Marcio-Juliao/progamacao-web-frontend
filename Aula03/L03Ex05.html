@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de Exercícios Físicos</title>
+</head>
+<body>
+  <h1>Lista de Exercícios Físicos</h1>
+
+  <label for="nomeExercicio">Exercício:</label>
+  <input id="nomeExercicio" type="text" placeholder="Ex.: Flexão">
+
+  <label for="repeticoesExercicio">Repetições:</label>
+  <input id="repeticoesExercicio" type="number" min="0" placeholder="Ex.: 15">
+
+  <button onclick="adicionarExercicio()">Adicionar</button>
+  <p id="mensagem"></p>
+
+  <hr>
+
+  <button onclick="exibirExercicios()">Exibir exercícios</button>
+  <div id="saida"></div>
+
+  <script>
+    const exercicios = [];
+
+    const adicionarExercicio = () => {
+      const nome = document.getElementById('nomeExercicio').value.trim();
+      const repeticoes = Number(document.getElementById('repeticoesExercicio').value);
+      const mensagem = document.getElementById('mensagem');
+
+      if (!nome || repeticoes < 0) {
+        mensagem.textContent = "Informe um exercício válido e uma quantidade de repetições positiva.";
+        return;
+      }
+
+      exercicios.push({ nome, repeticoes });
+      mensagem.textContent = `Exercício "${nome}" com ${repeticoes} repetições adicionado!`;
+
+      document.getElementById('nomeExercicio').value = '';
+      document.getElementById('repeticoesExercicio').value = '';
+    }
+
+    const exibirExercicios = () => {
+      const saida = document.getElementById('saida');
+
+      if (exercicios.length === 0) {
+        saida.textContent = "Nenhum exercício cadastrado.";
+        return;
+      }
+
+      const exerciciosOrdenados = [...exercicios].sort((a, b) => b.repeticoes - a.repeticoes);
+
+      let lista = '<ul>';
+      exerciciosOrdenados.forEach((exercicio, index) => {
+        lista += `<li>${index + 1}. ${exercicio.nome} — ${exercicio.repeticoes} repetições</li>`;
+      });
+      lista += '</ul>';
+
+      saida.innerHTML = lista;
+    }
+  </script>
+</body>
+</html>

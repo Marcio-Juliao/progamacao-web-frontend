@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de Filmes por Gênero</title>
+</head>
+<body>
+  <h1>Lista de Filmes por Gênero</h1>
+
+  <label for="nomeFilme">Nome do Filme:</label>
+  <input id="nomeFilme" type="text" placeholder="Ex.: Matrix">
+
+  <label for="generoFilme">Gênero:</label>
+  <input id="generoFilme" type="text" placeholder="Ex.: Ação">
+
+  <button onclick="cadastrarFilme()">Cadastrar</button>
+
+  <hr>
+
+  <label for="generoFiltro">Filtrar por gênero:</label>
+  <input id="generoFiltro" type="text" placeholder="Ex.: Ação">
+  <button onclick="filtrarFilmes()">Filtrar</button>
+
+  <div id="saida"></div>
+
+  <script>
+    const filmes = [];
+
+    function cadastrarFilme() {
+      const nome = document.getElementById('nomeFilme').value;
+      const genero = document.getElementById('generoFilme').value;
+      filmes.push({ nome, genero });
+      document.getElementById('saida').textContent = `Filme "${nome}" cadastrado.`;
+      document.getElementById('nomeFilme').value = '';
+      document.getElementById('generoFilme').value = '';
+    }
+
+    function filtrarFilmes() {
+      const genero = document.getElementById('generoFiltro').value;
+      const filmesFiltrados = filmes.filter(f => f.genero === genero);
+
+      if (filmesFiltrados.length === 0) {
+        document.getElementById('saida').textContent = `Nenhum filme encontrado do gênero "${genero}".`;
+        return;
+      }
+
+      let html = '<ul>';
+      filmesFiltrados.forEach(f => {
+        html += `<li>${f.nome} — ${f.genero}</li>`;
+      });
+      html += '</ul>';
+
+      document.getElementById('saida').innerHTML = html;
+    }
+  </script>
+</body>
+</html>

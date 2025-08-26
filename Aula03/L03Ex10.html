@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Sistema de Votação de Atividades</title>
+</head>
+<body>
+  <h1>Sistema de Votação de Atividades</h1>
+
+  <label for="atividade">Escolha sua atividade favorita:</label>
+  <select id="atividade">
+    <option value="Corrida">Corrida</option>
+    <option value="Natação">Natação</option>
+    <option value="Yoga">Yoga</option>
+    <option value="Ciclismo">Ciclismo</option>
+  </select>
+  <button onclick="votar()">Votar</button>
+  <button onclick="mostrarResultado()">Resultado</button>
+
+  <div id="saida"></div>
+
+  <script>
+    const votos = [];
+
+    function votar() {
+      const atividade = document.getElementById('atividade').value;
+      votos.push(atividade);
+      document.getElementById('saida').textContent = `Voto registrado para ${atividade}.`;
+    }
+
+    function mostrarResultado() {
+      if (votos.length === 0) {
+        document.getElementById('saida').textContent = "Nenhum voto registrado ainda.";
+        return;
+      }
+
+      const atividadesUnicas = [...new Set(votos)];
+
+      const contagem = atividadesUnicas.map(a => {
+        return { atividade: a, votos: votos.reduce((acc, v) => acc + (v === a ? 1 : 0), 0) };
+      });
+
+      const maisVotada = contagem.reduce((max, atual) => atual.votos > max.votos ? atual : max, contagem[0]);
+
+      let html = '<ul>';
+      contagem.forEach(c => {
+        html += `<li>${c.atividade}: ${c.votos} voto(s)</li>`;
+      });
+      html += '</ul>';
+
+      html += `<p><strong>A atividade mais votada é ${maisVotada.atividade}!</strong></p>`;
+
+      document.getElementById('saida').innerHTML = html;
+    }
+  </script>
+</body>
+</html>

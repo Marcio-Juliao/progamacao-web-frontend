@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de Contatos</title>
+</head>
+<body>
+  <h1>Lista de Contatos</h1>
+
+  <label for="nomeContato">Nome:</label>
+  <input id="nomeContato" type="text" placeholder="Ex.: João">
+
+  <label for="telefoneContato">Telefone:</label>
+  <input id="telefoneContato" type="text" placeholder="Ex.: (11) 99999-9999">
+
+  <button onclick="adicionarContato()">Adicionar contato</button>
+  <button onclick="exibirContatos()">Exibir contatos</button>
+
+  <hr>
+
+  <label for="nomeRemover">Remover contato pelo nome:</label>
+  <input id="nomeRemover" type="text" placeholder="Ex.: João">
+  <button onclick="removerContato()">Remover</button>
+
+  <div id="saida"></div>
+
+  <script>
+    const contatos = [];
+
+    function adicionarContato() {
+      const nome = document.getElementById('nomeContato').value;
+      const telefone = document.getElementById('telefoneContato').value;
+      contatos.push({ nome, telefone });
+      document.getElementById('saida').textContent = `Contato "${nome}" adicionado.`;
+    }
+
+    function exibirContatos() {
+      const listaOrdenada = contatos.toSorted((a, b) => a.nome.localeCompare(b.nome));
+      let html = '<ul>';
+      listaOrdenada.forEach(contato => {
+        html += `<li>${contato.nome} — ${contato.telefone}</li>`;
+      });
+      html += '</ul>';
+      document.getElementById('saida').innerHTML = html;
+    }
+
+    function removerContato() {
+      const nome = document.getElementById('nomeRemover').value;
+      const index = contatos.findIndex(c => c.nome === nome);
+      if (index !== -1) {
+        contatos.splice(index, 1);
+        document.getElementById('saida').textContent = `Contato "${nome}" removido.`;
+      } else {
+        document.getElementById('saida').textContent = `Contato "${nome}" não encontrado.`;
+      }
+    }
+  </script>
+</body>
+</html>

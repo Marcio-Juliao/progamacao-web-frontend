@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Ranking de Filmes por Avaliação</title>
+</head>
+<body>
+  <h1>Ranking de Filmes por Avaliação</h1>
+
+  <label for="nomeFilme">Nome do Filme:</label>
+  <input id="nomeFilme" type="text" placeholder="Ex.: Matrix">
+
+  <label for="generoFilme">Gênero:</label>
+  <input id="generoFilme" type="text" placeholder="Ex.: Ação">
+
+  <label for="notaFilme">Nota (0-10):</label>
+  <input id="notaFilme" type="number" min="0" max="10" step="0.1" placeholder="Ex.: 8.5">
+
+  <button onclick="cadastrarFilme()">Cadastrar Filme</button>
+  <button onclick="topFilmesAcao()">Top Filmes Ação</button>
+
+  <div id="saida"></div>
+
+  <script>
+    const filmes = [];
+
+    function cadastrarFilme() {
+      const nome = document.getElementById('nomeFilme').value;
+      const genero = document.getElementById('generoFilme').value;
+      const nota = Number(document.getElementById('notaFilme').value);
+      filmes.push({ nome, genero, nota });
+      document.getElementById('saida').textContent = `Filme "${nome}" cadastrado.`;
+      document.getElementById('nomeFilme').value = '';
+      document.getElementById('generoFilme').value = '';
+      document.getElementById('notaFilme').value = '';
+    }
+
+    function topFilmesAcao() {
+      const filmesAcao = filmes
+        .filter(f => f.genero.toLowerCase() === "ação")
+        .sort((a, b) => b.nota - a.nota)
+        .slice(0, 5)
+        .map(f => `Filme: ${f.nome} | Nota: ${f.nota.toFixed(1)}`);
+
+      if (filmesAcao.length === 0) {
+        document.getElementById('saida').textContent = "Nenhum filme de ação cadastrado.";
+        return;
+      }
+
+      // Média das notas de ação
+      const media = filmes
+        .filter(f => f.genero.toLowerCase() === "ação")
+        .reduce((acc, f) => acc + f.nota, 0) / filmes.filter(f => f.genero.toLowerCase() === "ação").length;
+
+      let html = '<ul>';
+      filmesAcao.forEach(f => html += `<li>${f}</li>`);
+      html += `</ul><p><strong>Média das notas de filmes de ação:</strong> ${media.toFixed(2)}</p>`;
+
+      document.getElementById('saida').innerHTML = html;
+    }
+  </script>
+</body>
+</html>

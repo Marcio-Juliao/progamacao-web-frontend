@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Controle de Notas com Ranking</title>
+</head>
+<body>
+  <h1>Sistema de Controle de Notas com Ranking</h1>
+
+  <label for="nomeAluno">Nome do Aluno:</label>
+  <input id="nomeAluno" type="text" placeholder="Ex.: Maria">
+
+  <label for="notaAluno">Nota Final:</label>
+  <input id="notaAluno" type="number" min="0" max="10" step="0.1" placeholder="Ex.: 7.5">
+
+  <button onclick="adicionarAluno()">Cadastrar Aluno</button>
+  <button onclick="exibirAprovados()">Exibir Aprovados</button>
+
+  <div id="saida"></div>
+
+  <script>
+    const alunos = [];
+
+    function adicionarAluno() {
+      const nome = document.getElementById('nomeAluno').value;
+      const nota = Number(document.getElementById('notaAluno').value);
+      alunos.push({ nome, nota });
+      document.getElementById('saida').textContent = `Aluno "${nome}" cadastrado com nota ${nota}.`;
+      document.getElementById('nomeAluno').value = '';
+      document.getElementById('notaAluno').value = '';
+    }
+
+    function exibirAprovados() {
+      const aprovados = alunos
+        .filter(a => a.nota >= 6)
+        .sort((a, b) => b.nota - a.nota)
+        .map(a => `${a.nome} — ${a.nota.toFixed(1)}`);
+
+      if (aprovados.length === 0) {
+        document.getElementById('saida').textContent = "Nenhum aluno aprovado.";
+        return;
+      }
+
+      const media = alunos
+        .filter(a => a.nota >= 6)
+        .reduce((acc, a) => acc + a.nota, 0) / aprovados.length;
+
+      let html = '<ul>';
+      aprovados.forEach(a => {
+        html += `<li>${a}</li>`;
+      });
+      html += `</ul><p><strong>Média das notas aprovadas:</strong> ${media.toFixed(2)}</p>`;
+
+      document.getElementById('saida').innerHTML = html;
+    }
+  </script>
+</body>
+</html>

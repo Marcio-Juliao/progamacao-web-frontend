@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Cadastro de Receitas</title>
+</head>
+<body>
+  <h1>Cadastro de Receitas</h1>
+
+  <label for="nomeReceita">Nome da Receita:</label>
+  <input id="nomeReceita" type="text" placeholder="Ex.: Bolo de Chocolate">
+
+  <label for="tempoPreparo">Tempo de Preparo (minutos):</label>
+  <input id="tempoPreparo" type="number" min="0" placeholder="Ex.: 45">
+
+  <button onclick="cadastrarReceita()">Cadastrar</button>
+  <p id="mensagem"></p>
+
+  <hr>
+
+  <label for="tempoFiltro">Mostrar receitas com tempo menor ou igual a (minutos):</label>
+  <input id="tempoFiltro" type="number" min="0" placeholder="Ex.: 30">
+
+  <button onclick="filtrarReceitas()">Filtrar por tempo</button>
+  <div id="saida"></div>
+
+  <script>
+    const receitas = [];
+
+    const cadastrarReceita = () => {
+      const nome = document.getElementById('nomeReceita').value.trim();
+      const tempo = Number(document.getElementById('tempoPreparo').value);
+      const mensagem = document.getElementById('mensagem');
+
+      if (!nome || tempo < 0) {
+        mensagem.textContent = "Informe um nome válido e um tempo de preparo positivo.";
+        return;
+      }
+
+      receitas.push({ nome, tempo });
+      mensagem.textContent = `Receita "${nome}" cadastrada com tempo de preparo de ${tempo} minutos.`;
+
+      document.getElementById('nomeReceita').value = '';
+      document.getElementById('tempoPreparo').value = '';
+    }
+
+    const filtrarReceitas = () => {
+      const tempoMax = Number(document.getElementById('tempoFiltro').value);
+      const saida = document.getElementById('saida');
+
+      if (isNaN(tempoMax) || tempoMax < 0) {
+        saida.textContent = "Informe um valor válido para filtrar.";
+        return;
+      }
+
+      const receitasFiltradas = receitas.filter(receita => receita.tempo <= tempoMax);
+
+      if (receitasFiltradas.length === 0) {
+        saida.textContent = `Nenhuma receita encontrada com tempo menor ou igual a ${tempoMax} minutos.`;
+        return;
+      }
+
+      let lista = '<ul>';
+      receitasFiltradas.forEach(receita => {
+        lista += `<li>${receita.nome} — ${receita.tempo} minutos</li>`;
+      });
+      lista += '</ul>';
+
+      saida.innerHTML = lista;
+    }
+  </script>
+</body>
+</html>

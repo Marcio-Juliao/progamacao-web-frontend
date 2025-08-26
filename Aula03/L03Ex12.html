@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de Produtos com Estoque e Preço</title>
+</head>
+<body>
+  <h1>Lista de Produtos com Estoque e Preço</h1>
+
+  <label for="nomeProduto">Nome do Produto:</label>
+  <input id="nomeProduto" type="text" placeholder="Ex.: Camisa">
+
+  <label for="precoProduto">Preço:</label>
+  <input id="precoProduto" type="number" min="0" step="0.01" placeholder="Ex.: 50.00">
+
+  <label for="quantidadeProduto">Quantidade em Estoque:</label>
+  <input id="quantidadeProduto" type="number" min="0" placeholder="Ex.: 10">
+
+  <button onclick="adicionarProduto()">Cadastrar Produto</button>
+
+  <hr>
+
+  <label for="precoFiltro">Mostrar produtos com preço menor que:</label>
+  <input id="precoFiltro" type="number" min="0" step="0.01" placeholder="Ex.: 100.00">
+  <button onclick="produtosPromocao()">Produtos em promoção</button>
+
+  <div id="saida"></div>
+
+  <script>
+    const produtos = [];
+
+    function adicionarProduto() {
+      const nome = document.getElementById('nomeProduto').value;
+      const preco = Number(document.getElementById('precoProduto').value);
+      const quantidade = Number(document.getElementById('quantidadeProduto').value);
+      produtos.push({ nome, preco, quantidade });
+      document.getElementById('saida').textContent = `Produto "${nome}" cadastrado.`;
+      document.getElementById('nomeProduto').value = '';
+      document.getElementById('precoProduto').value = '';
+      document.getElementById('quantidadeProduto').value = '';
+    }
+
+    function produtosPromocao() {
+      const precoMax = Number(document.getElementById('precoFiltro').value);
+      const filtrados = produtos.filter(p => p.preco < precoMax);
+
+      if (filtrados.length === 0) {
+        document.getElementById('saida').textContent = `Nenhum produto encontrado com preço menor que R$ ${precoMax.toFixed(2)}.`;
+        return;
+      }
+
+      let html = '<ul>';
+      filtrados.forEach(p => {
+        const precoDesconto = (p.preco * 0.9).toFixed(2); // 10% de desconto
+        html += `<li>${p.nome} — Preço: R$ ${precoDesconto} (desconto aplicado) — Estoque: ${p.quantidade}</li>`;
+      });
+      html += '</ul>';
+
+      document.getElementById('saida').innerHTML = html;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Registro de Pesos</title>
+</head>
+<body>
+  <h1>Registro de Pesos</h1>
+
+  <label for="pesoDiario">Peso (kg):</label>
+  <input id="pesoDiario" type="number" step="0.1" placeholder="Ex.: 70.5">
+
+  <button onclick="adicionarPeso()">Adicionar peso</button>
+  <button onclick="exibirHistorico()">Exibir histórico</button>
+  <button onclick="calcularMedia()">Calcular média</button>
+
+  <div id="saida"></div>
+
+  <script>
+    const pesos = [];
+
+    function adicionarPeso() {
+      const peso = Number(document.getElementById('pesoDiario').value);
+      pesos.push(peso);
+      document.getElementById('saida').textContent = `Peso ${peso} kg adicionado.`;
+      document.getElementById('pesoDiario').value = '';
+    }
+
+    function exibirHistorico() {
+      if (pesos.length === 0) {
+        document.getElementById('saida').textContent = "Nenhum peso registrado.";
+        return;
+      }
+      let html = '<ul>';
+      pesos.forEach((p, i) => {
+        html += `<li>Dia ${i + 1}: ${p} kg</li>`;
+      });
+      html += '</ul>';
+      document.getElementById('saida').innerHTML = html;
+    }
+
+    function calcularMedia() {
+      if (pesos.length === 0) {
+        document.getElementById('saida').textContent = "Nenhum peso registrado para calcular média.";
+        return;
+      }
+      const soma = pesos.reduce((acc, p) => acc + p, 0);
+      const media = soma / pesos.length;
+      document.getElementById('saida').textContent = `Média dos pesos: ${media.toFixed(2)} kg`;
+    }
+  </script>
+</body>
+</html>
