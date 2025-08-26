@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Document</title>
+</head>
+<body>
+
+   Nome do jogo: 
+   <input type="text" id="input_nome"> <br>
+
+   Pontuação: 
+   <input type="text" id="input_pontos"> <br>
+
+   <button onclick="adicionar()">Adicionar</button>
+   <button onclick="mostrar()">Mostrar Ranking</button>
+   
+   <div id="div_mensagem"></div>
+</body>
+</html>
+<script>
+   const listaJogos = [
+      {nome: "Fifa", pontos: "10"},
+      {nome: "GTA", pontos: "4"},
+      {nome: "CS", pontos: "7"},
+      {nome: "Rainbow 6", pontos: "3"},
+   ];
+
+   function adicionar() {
+      const nome = input_nome.value;
+      const pontos = input_pontos.value;
+      listaJogos.push({ nome, pontos });
+   }
+
+   function mostrar() {
+      let mensagem = "";
+      listaJogos
+      .sort((a, b) => b.pontos - a.pontos)
+      .forEach((jogo, indice, vetor) => {
+         // const jogo = {nome: "Fifa", pontos: "10"};
+         console.log(jogo);
+         mensagem += `${indice+1}. Nome: ${jogo.nome} | Pontuação: ${jogo.pontos}<br>`
+      });
+
+      mensagem += `Maior pontuação: ${listaJogos[0].nome} (${listaJogos[0].pontos} pontos)`;
+      
+      div_mensagem.innerHTML = mensagem;
+   }
+</script>

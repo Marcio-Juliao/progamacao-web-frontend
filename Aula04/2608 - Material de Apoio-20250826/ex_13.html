@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    Nome do filme:
+    <input type="text" id="input_nome" /> <br />
+
+    Genero do filme:
+    <input type="text" id="input_genero" /> <br />
+
+    Nota do filme:
+    <input type="text" id="input_nota" /> <br />
+
+    <button onclick="adicionar()">Adicionar</button>
+    <button onclick="filtrar()">Top Filmes Ação</button>
+
+    <div id="div_mensagem"></div>
+  </body>
+</html>
+<script>
+  // const listaFilmes = [];
+  const listaFilmes = [
+    {
+      nome: "Velozes e Furiosos",
+      genero: "Ação",
+      nota: "7.5",
+    },
+    {
+      nome: "Premonição",
+      genero: "Terror",
+      nota: "2",
+    },
+    {
+      nome: "Carros",
+      genero: "Animação",
+      nota: "10",
+    },
+    {
+      nome: "Ainda Estou Aqui",
+      genero: "Drama",
+      nota: "2",
+    },
+    {
+      nome: "Arranha-Céu",
+      genero: "Ação",
+      nota: "7",
+    },
+    {
+      nome: "John Wick",
+      genero: "Ação",
+      nota: "10",
+    },
+    {
+      nome: "Kung Fu Panda",
+      genero: "Ação",
+      nota: "2",
+    },
+    {
+      nome: "Rambo 1",
+      genero: "Ação",
+      nota: "4",
+    },
+    {
+      nome: "Rambo 2",
+      genero: "Ação",
+      nota: "5",
+    },
+    {
+      nome: "Rambo 3",
+      genero: "Ação",
+      nota: "6",
+    },
+    {
+      nome: "Rambo 4",
+      genero: "Ação",
+      nota: "7",
+    },
+  ];
+
+  function adicionar() {
+    const nome = input_nome.value;
+    const genero = input_genero.value;
+    const nota = input_nota.value;
+    listaFilmes.push({ nome, genero, nota });
+  }
+
+  function filtrar() {
+    let mensagem = "";
+
+    const listaFiltrada = listaFilmes
+      .filter((filme) => filme.genero.toLocaleLowerCase() === "ação")
+      .sort((a, b) => b.nota - a.nota);
+
+   const media = listaFiltrada.reduce((acc, filme) => acc + filme.nota, 0) / listaFiltrada.length; 
+
+    listaFiltrada
+      .map((filme) => `Filme: ${filme.nome} | Nota: ${filme.nota}`)
+      .slice(0, 5)
+      .forEach((filme) => {
+        mensagem += `${filme} <br>`;
+      });
+
+    div_mensagem.innerHTML = mensagem;
+  }
+</script>
+<!-- Desafio adicional: Calcular a média das notas dos filmes de ação usando reduce. -->
