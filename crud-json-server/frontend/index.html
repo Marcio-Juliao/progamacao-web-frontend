@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CRUD - Jogos</title>
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <div class="tela">
+      <!-- Lado esquerdo: Formulário -->
+      <aside class="esquerda">
+        <section class="formulario">
+          <h1>CRUD - Jogos</h1>
+
+          <label for="tituloJogo">Título do Jogo:</label>
+          <input id="tituloJogo" type="text" placeholder="Ex.: The Last of Us" />
+
+          <label for="generoJogo">Gênero:</label>
+          <input id="generoJogo" type="text" placeholder="Ex.: Ação/Aventura" />
+
+          <label for="plataformaJogo">Plataforma:</label>
+          <input id="plataformaJogo" type="text" placeholder="Ex.: PS5, Xbox, PC" />
+
+          <label for="dificuldadeJogo">Dificuldade (1-5):</label>
+          <input id="dificuldadeJogo" type="number" min="1" max="5" placeholder="Ex.: 3" />
+
+          <label for="anoJogo">Ano de Lançamento:</label>
+          <input id="anoJogo" type="number" min="1950" placeholder="Ex.: 2020" />
+
+          <button type="button" onclick="cadastrarJogo()">Cadastrar Jogo</button>
+        </section>
+      </aside>
+
+      <!-- Lado direito: Lista de Jogos -->
+      <main class="direita">
+        <section class="lista">
+          <h2>Lista de Jogos</h2>
+          <div id="saida"></div>
+
+          <!-- Modal de edição -->
+          <div id="modalEdicao" class="modal">
+            <div class="modal-content">
+              <span class="close" onclick="fecharModal()">&times;</span>
+              <h2>Editar Jogo</h2>
+
+              <input type="hidden" id="editarId" />
+
+              <label for="editarTitulo">Título:</label>
+              <input id="editarTitulo" type="text" />
+
+              <label for="editarGenero">Gênero:</label>
+              <input id="editarGenero" type="text" />
+
+              <label for="editarPlataforma">Plataforma:</label>
+              <input id="editarPlataforma" type="text" />
+
+              <label for="editarDificuldade">Dificuldade (1-5):</label>
+              <input id="editarDificuldade" type="number" min="1" max="5" />
+
+              <label for="editarAno">Ano de Lançamento:</label>
+              <input id="editarAno" type="number" min="1950" />
+
+              <button onclick="salvarEdicao()">Salvar</button>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>
+
+<script>
+  const BASE_URL = "http://localhost:3000/jogos";
+
+  // READ
+  async function buscarJogos() {
+    try {
+      const response = await fetch(BASE_URL);
+      if (!response.ok) throw new Error("Erro ao buscar jogos");
+      return await response.json();
+    } catch (error) {
+      console.error("Erro no buscarJogos:", error);
+      return [];
+    }
+  }
+
+  function montarCardJogo(jogo) {
+    const jogoDiv = document.createElement("div");
+    jogoDiv.classList.add("jogo");
+
+    jogoDiv.innerHTML = `
+        <h3>${jogo.titulo}</h3>
+        <p><strong>Gênero:</strong> ${jogo.genero}</p>
+        <p><strong>Plataforma:</strong> ${jogo.plataforma}</p>
+        <p><strong>Dificuldade:</strong> ${jogo.dificuldade}/5</p>
+        <p><strong>Ano de Lançamento:</strong> ${jogo.ano}</p>
+        <button onclick="editarJogo(${jogo.id})">Editar</button>
+        <button onclick="deletarJogo(${jogo.id})">Deletar</button>
+    `;
+    return jogoDiv;
+  }
+
+  async function listarJogos() {
+    const saida = document.getElementById("saida");
+    saida.innerHTML = "";
+
+    const jogos = await buscarJogos();
+    jogos.reverse();
+    jogos.forEach((jogo) => {
+      saida.appendChild(montarCardJogo(jogo));
+    });
+  }
+
+  // CREATE
+  async function cadastrarJogo() {
+    const titulo = document.getElementById("tituloJogo").value;
+    const genero = document.getElementById("generoJogo").value;
+    const plataforma = document.getElementById("plataformaJogo").value;
+    const dificuldade = document.getElementById("dificuldadeJogo").value;
+    const ano = document.getElementById("anoJogo").value;
+
+    if (!titulo || !genero || !plataforma || !dificuldade || !ano) {
+      alert("Preencha todos os campos!");
+      return;
+    }
+
+    const novoJogo = { titulo, genero, plataforma, dificuldade, ano };
+
+    try {
+      await fetch(BASE_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(novoJogo),
+      });
+      listarJogos();
+    } catch (error) {
+      console.error("Erro no cadastrarJogo:", error);
+    }
+  }
+
+  // UPDATE
+  async function editarJogo(id) {
+    try {
+      const response = await fetch(`${BASE_URL}/${id}`);
+      const jogo = await response.json();
+
+      document.getElementById("editarId").value = jogo.id;
+      document.getElementById("editarTitulo").value = jogo.titulo;
+      document.getElementById("editarGenero").value = jogo.genero;
+      document.getElementById("editarPlataforma").value = jogo.plataforma;
+      document.getElementById("editarDificuldade").value = jogo.dificuldade;
+      document.getElementById("editarAno").value = jogo.ano;
+
+      document.getElementById("modalEdicao").style.display = "block";
+    } catch (error) {
+      console.error("Erro ao abrir modal de edição:", error);
+    }
+  }
+
+  async function salvarEdicao() {
+    const id = document.getElementById("editarId").value;
+    const titulo = document.getElementById("editarTitulo").value;
+    const genero = document.getElementById("editarGenero").value;
+    const plataforma = document.getElementById("editarPlataforma").value;
+    const dificuldade = document.getElementById("editarDificuldade").value;
+    const ano = document.getElementById("editarAno").value;
+
+    const jogoAtualizado = { titulo, genero, plataforma, dificuldade, ano };
+
+    try {
+      await fetch(`${BASE_URL}/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(jogoAtualizado),
+      });
+      fecharModal();
+      listarJogos();
+    } catch (error) {
+      console.error("Erro no salvarEdicao:", error);
+    }
+  }
+
+  // DELETE
+  async function deletarJogo(id) {
+    if (!confirm("Tem certeza que deseja excluir este jogo?")) return;
+
+    try {
+      await fetch(`${BASE_URL}/${id}`, { method: "DELETE" });
+      listarJogos();
+    } catch (error) {
+      console.error("Erro no deletarJogo:", error);
+    }
+  }
+
+  // Modal
+  function fecharModal() {
+    document.getElementById("modalEdicao").style.display = "none";
+  }
+
+  window.onclick = function (event) {
+    const modal = document.getElementById("modalEdicao");
+    if (event.target == modal) {
+      fecharModal();
+    }
+  };
+
+  // Inicializa
+  document.addEventListener("DOMContentLoaded", listarJogos);
+</script>

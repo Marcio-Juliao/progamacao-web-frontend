@@ -1,0 +1,52 @@
+{
+  "jogos": [
+    {
+      "id": 1,
+      "titulo": "Genshin Impact",
+      "genero": "RPG de Ação",
+      "plataforma": "PC / Mobile / PlayStation",
+      "dificuldade": 3,
+      "anoLancamento": 2020
+    },
+    {
+      "id": 2,
+      "titulo": "League of Legends",
+      "genero": "MOBA",
+      "plataforma": "PC",
+      "dificuldade": 4,
+      "anoLancamento": 2009
+    },
+    {
+      "id": 3,
+      "titulo": "Minecraft",
+      "genero": "Sandbox",
+      "plataforma": "PC / Consoles / Mobile",
+      "dificuldade": 2,
+      "anoLancamento": 2011
+    },
+    {
+      "id": 4,
+      "titulo": "God of War Ragnarok",
+      "genero": "Ação / Aventura",
+      "plataforma": "PlayStation 5",
+      "dificuldade": 4,
+      "anoLancamento": 2022
+    },
+    {
+      "id": 5,
+      "titulo": "Stardew Valley",
+      "genero": "RPG / Simulação",
+      "plataforma": "PC / Consoles / Mobile",
+      "dificuldade": 2,
+      "anoLancamento": 2016
+    },
+    {
+      "titulo": "Valorant",
+      "genero": "FPS Tático",
+      "plataforma": "PC",
+      "dificuldade": "4",
+      "ano": "",
+      "id": 7
+    }
+  ]
+}
