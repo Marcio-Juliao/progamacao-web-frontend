@@ -8,7 +8,7 @@
   </head>
   <body>
     <div class="tela">
-      <!-- Lado esquerdo: Formulário -->
+
       <aside class="esquerda">
         <section class="formulario">
           <h1>CRUD - Jogos</h1>
@@ -32,13 +32,11 @@
         </section>
       </aside>
 
-      <!-- Lado direito: Lista de Jogos -->
       <main class="direita">
         <section class="lista">
           <h2>Lista de Jogos</h2>
           <div id="saida"></div>
 
-          <!-- Modal de edição -->
           <div id="modalEdicao" class="modal">
             <div class="modal-content">
               <span class="close" onclick="fecharModal()">&times;</span>
@@ -73,7 +71,6 @@
 <script>
   const BASE_URL = "http://localhost:3000/jogos";
 
-  // READ
   async function buscarJogos() {
     try {
       const response = await fetch(BASE_URL);
@@ -112,7 +109,6 @@
     });
   }
 
-  // CREATE
   async function cadastrarJogo() {
     const titulo = document.getElementById("tituloJogo").value;
     const genero = document.getElementById("generoJogo").value;
@@ -139,7 +135,6 @@
     }
   }
 
-  // UPDATE
   async function editarJogo(id) {
     try {
       const response = await fetch(`${BASE_URL}/${id}`);
@@ -181,7 +176,6 @@
     }
   }
 
-  // DELETE
   async function deletarJogo(id) {
     if (!confirm("Tem certeza que deseja excluir este jogo?")) return;
 
@@ -193,7 +187,6 @@
     }
   }
 
-  // Modal
   function fecharModal() {
     document.getElementById("modalEdicao").style.display = "none";
   }
@@ -205,6 +198,5 @@
     }
   };
 
-  // Inicializa
   document.addEventListener("DOMContentLoaded", listarJogos);
 </script>

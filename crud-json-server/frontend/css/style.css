@@ -8,7 +8,7 @@
 
 /* Corpo da página */
 body {
-  background: #f8f9fa; /* fundo branco suave */
+  background: #f8f9fa;
   color: #212529;
   min-height: 100vh;
   display: flex;
@@ -21,7 +21,7 @@ body {
   display: flex;
   width: 90%;
   max-width: 1100px;
-  background: #ffffff; /* branco */
+  background: #ffffff;
   border-radius: 15px;
   overflow: hidden;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
@@ -37,7 +37,7 @@ body {
 .formulario h1 {
   margin-bottom: 1.5rem;
   font-size: 1.8rem;
-  color: #e63946; /* destaque vermelho */
+  color: #e63946;
   border-left: 5px solid #e63946;
   padding-left: 10px;
 }
@@ -181,7 +181,7 @@ body {
 }
 
 #saida .jogo button:first-of-type {
-  background-color: #06d6a0; /* verde editar */
+  background-color: #06d6a0;
   color: #fff;
 }
 
@@ -190,7 +190,7 @@ body {
 }
 
 #saida .jogo button:last-of-type {
-  background-color: #e63946; /* vermelho deletar */
+  background-color: #e63946;
   color: #fff;
 }
 
